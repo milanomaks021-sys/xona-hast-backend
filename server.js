@@ -246,8 +246,6 @@ async function initDB() {
   await db(`CREATE TABLE IF NOT EXISTS blacklist (id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), phone VARCHAR(20), user_id UUID, reason TEXT, created_at TIMESTAMP DEFAULT NOW())`);
   console.log('✅ База данных готова!');
 }
-
 const PORT = process.env.PORT || 5000;
-initDB().then(() => {
-  app.listen(PORT, () => console.log(`🏠 Xona.Hast.tj API запущен на порту ${PORT}`));
-}).catch(e => { console.error('❌ Ошибка БД:', e); process.exit(1); });
+app.listen(PORT, () => console.log(`🏠 Xona.Hast.tj API запущен на порту ${PORT}`));
+initDB().catch(e => console.error('❌ Ошибка БД:', e));
