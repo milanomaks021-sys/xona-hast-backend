@@ -80,7 +80,7 @@ app.get('/api/listings', async (req,res) => {
     if (rooms)     { conds.push(`l.rooms=$${p++}`);          params.push(parseInt(rooms)); }
     if (min_price) { conds.push(`l.price_somoni>=$${p++}`);  params.push(parseFloat(min_price)); }
     if (max_price) { conds.push(`l.price_somoni<=$${p++}`);  params.push(parseFloat(max_price)); }
-    if (search)    { conds.push(`(l.title ILIKE $${p++} OR l.description ILIKE $${p++})`); params.push(`%${search}%`,`%${search}%`); p++; }
+    if (search)    { conds.push(`(l.title ILIKE $${p++} OR l.description ILIKE $${p++})`); params.push(`%${search}%`,`%${search}%`); }
     const order = sort==='price_asc'?'l.price_somoni ASC':sort==='price_desc'?'l.price_somoni DESC':sort==='newest'?'l.created_at DESC':"CASE WHEN l.vip_type='premium' THEN 1 WHEN l.vip_type='vip' THEN 2 ELSE 3 END, l.created_at DESC";
     const offset = (parseInt(page)-1)*parseInt(limit);
     const [rows,cnt] = await Promise.all([
